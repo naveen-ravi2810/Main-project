@@ -1,0 +1,293 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+<style>
+table,th,td{
+    border: 1px solid rgb(0, 0, 0);
+    border-collapse: collapse;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.productsdetails{
+    height: 50px;
+}
+
+
+.box {
+    
+  display: none;
+  position: fixed;
+  z-index: 1; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+    padding-left: 10px;
+}
+.box h3{
+    background-color: black;
+    color: red;
+    text-align: center;
+}
+
+.data{
+  background-color: #fefefe;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 50%;
+  height: 20px;
+  
+  
+}
+.box label{
+    color: aqua;
+    padding-left: 200px;
+}
+
+.box input{
+    
+    position: absolute;
+    padding-left: 20px;
+}
+
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<title>Products List</title>
+{% include "main.html" %}
+{% endblock %}
+
+{% block body %}
+
+<div id="Search_Box"><input type="text" id="searchproduct" name="searchproduct" placeholder="Search Products Here"></div>
+<div id="products" class="products"><br>
+    <button id="create" style="cursor: pointer;">CREATE PRODUCTS</button>
+    <h1>These are the items in Market</h1>
+    <div id="displaymessage" style="display:none;width:100%;margin-top:10px;"></div>
+    <table id="ProductTable" style="width:100% ;">
+        <tr class="tableheadings" ">
+            <!-- <th>Product ID(default)</th> -->
+            <th>Product Name</th>
+            <th>Product Code</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Dealer</th>
+            <th>Inactive / Active</th>
+            <th>Edit</th>
+            
+        </tr>
+        {% for produc in product %}
+        <tr id="{{produc.productid}}_productdetails" class="productsdetails">
+            <td id="{{produc.productid}}_tbproname">{{produc.proname}}</td>
+            <td id="{{produc.productid}}_tbprocode">{{produc.procode}}</td>
+            <td id="{{produc.productid}}_tbprice">{{produc.price}}</td>
+            <td id="{{produc.productid}}_tbquantity">{{produc.quantity}}</td>
+            <td id="{{produc.productid}}_tbprocompany">{{produc.procompany}}</td>
+            <td id="{{produc.productid}}_tbstatus">{{produc.status}}</td>
+            <td style="cursor: pointer;" onclick="EditProduct('{{produc.productid}}','{{produc.procode}}','{{produc.proname}}','{{produc.price}}','{{produc.quantity}}','{{produc.procompany}}','{{produc.status}}')" id="editbutton">EDIT</td>         
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+
+    <br>
+</div>
+<div id="editproduct" class="box" style="display: none;">
+    <p><h3>Edit PRODUCTS in this column <button id="edclose">close</button></h3></p>
+    <br>
+    <form method="post" class="editform">
+        <input type="hidden" id="edproductid" name="edproductid" >
+        <div class="data"><label >Product Code</label><input type="text" id="edprocode" name="edprocode"  style="margin-right: 5%;margin-left:3%;" ></div>
+        <div class="data"><label >Product Name</label><input type="text" id="edproname" name="edproname" style="margin-right: 5%;"></div>
+        <div class="data"><label >price</label><input type="text" id="edprice" name="edprice"  style="margin-right: 5%;"></div>
+        <div class="data"><label >Quantity</label><input type="text" id="edquantity" name="edquantity"  style="margin-right: 5%;"></div>
+        <div class="data"><label >Product Company</label><input type="text" id="eddealer" name="eddealer"  style="margin-right: 5%;"></div>
+        <div class="data"><label >Status</label>
+            <select name="edstatus" id="edstatus" >
+                <option value="Yes"{% if product.status == 'Yes' %}selected {% endif %}>Yes</option>
+                <option value="No" {% if product.status == 'No' %}selected {% endif %}>No</option>
+            </select>
+    </div>
+        <button id="btnEditProduct" style="margin-left: 50%;">Update the Product</button>
+
+    </form>
+    <br>
+</div>
+
+
+<div id="createproducts" class="box" >
+
+    <p><h3>Enter new Product in this column <button id="crclose">close</button></h3></p>
+    <br>
+    <form id="createproduct"  method="POST" >
+        <div class="data"><label >Product Code</label><input type="text" id="crprocode" name="crprocode" required style="margin-right: 5%;margin-left:3%;" ></div>
+        <div class="data"><label >Product Name</label><input type="text" id="crproname" name="crproname" required style="margin-right: 5%;"></div>
+        <div class="data"><label >price</label><input type="text" id="crprice" name="crprice" required style="margin-right: 5%;"></div>
+        <div class="data"><label >Quantity</label><input type="text" id="crquantity" name="crquantity" required style="margin-right: 5%;"></div>
+        <div class="data"><label >Product Company</label><input type="text" id="crdealer" name="crdealer" required style="margin-right: 5%;"></div>
+        <div class="data"><label >Status</label>
+            <select name="crstatus" id="crstatus" >
+                <option value="Yes"{% if product.status == 'Yes' %}selected {% endif %}>Yes</option>
+                <option value="No" {% if product.status == 'No' %}selected {% endif %}>No</option>
+            </select>
+        </div>
+        <input id="btnSaveProduct" type="button" style="margin-left: 50%;" value="Save Product">
+
+    </form>
+    <br>
+   
+</div>
+
+<script>
+    
+    function EditProduct(id, code, name, price, quantity, dealer, status ){
+        $("#editproduct").show(2000);
+        console.log(id);
+        console.log("Edit ptoducts assembled");
+
+        var id = $('#edproductid').val(id);
+        var code = $('#edprocode').val(code);
+
+		var name = $('#edproname').val(name);
+        var price = $('#edprice').val(price);
+        var quantity = $('#edquantity').val(quantity);
+        var dealer = $('#eddealer').val(dealer);
+        var status = $('#edstatue').val(status);
+        console.log("after edit product assembled")
+    }
+
+
+    $(document).ready(function(){
+        $('#searchproduct').keyup(function(){
+        var search = $(this).val();
+        if(search != ''){
+            load_data(search);
+        }else{
+            load_data();
+        }
+        })
+        function load_data(query){
+            console.log("search ajax")
+            $.ajax({
+                url: '/productsearch',
+                data: {productsearch:query},
+                type: 'POST',
+                success:function(response){
+                    $('#products').empty();
+                    $('#products').append(response.value);
+                }
+            });
+        }
+        // To Show the Create box 
+        $("#create").click(function(){
+            $("#createproducts").show(2000);
+        });
+
+        // to close the opened create box 
+       $("#crclose").click(function(){
+            $("#createproducts").hide(2000);
+        })
+
+        // to close the opened Edit box 
+       $("#edclose").click(function(){
+            $("#editproduct").hide(2000);
+        })
+    })
+
+
+    $(function(){
+        console.log("pre button check")
+	    $('#btnSaveProduct').click(function(){
+
+            // the product is being created and loaded to databade
+            console.log("Save product Called")
+		    var id = $('#productid').val();
+            var code = $('#crprocode').val();
+		    var name = $('#crproname').val();
+            var price = $('#crprice').val();
+            var quantity = $('#crquantity').val();
+            var dealer = $('#crdealer').val();
+            var status = $('#crstatus').val();
+            $.ajax({
+			    url: '/create',
+			    data: $('form').serialize(),
+			    type: 'POST',
+			    success: function(response){
+			 	    console.log(response.productid);
+                    productid=response.productid
+                    console.log(productid)
+                    $("#createproducts").hide(2000);
+                    alert("The Product "+name +" has been created")
+                    console.log('before adding row')
+                    console.log(typeof name)
+                    var newrow='<tr id="'+productid+'_productdetails" class="productsdetails"> <td id="'+productid+'_tbproname">"'+name+'"</td> <td id="'+productid+'_tbprocode">'+code+'</td> <td id="'+productid+'_tbprice">'+price+'</td> <td id="'+productid+'_tbproquantity">'+quantity+'</td>  <td id="'+productid+'_tbprocompany">'+dealer+'</td> <td id="'+productid+'_tbstatus">'+status+'</td> <td style="cursor: pointer;" onclick="EditProduct('+productid+','+code+','+name+','+price+','+quantity+','+dealer+','+status+')" id="editbutton">EDIT</td> </tr>';
+                    console.log('New Variable assigned');
+
+                    $("#ProductTable").append(newrow);
+                },
+             
+			    error: function(error){
+			 	    console.log(error);
+                    alert("This Product Code is Already Taken");
+			    }
+                
+		    });
+             
+            
+        });
+        console.log("Assemble the edit button")
+        $('#btnEditProduct').click(function(){
+
+            console.log("edit product side")
+            var id = $('#edproductid').val();
+            var code = $('#edprocode').val();
+		    var name = $('#edproname').val();
+            var price = $('#edprice').val();
+            var quantity = $('#edquantity').val();
+            var dealer = $('#eddealer').val();
+            var status = $('#edstatus').val();
+            console.log('before edit ajax')
+            $.ajax({
+                url:'/editproduct',
+                data: $('form').serialize(),
+                type: 'POST',
+                success: function(response , productid_1){
+                    productid_1=response.productid_1
+                    console.log(productid_1)
+                    
+                    $("#"+productid_1+"_tbproname").replaceWith(name);
+                    $('#'+productid_1+'_tbprocode').replaceWith(code);
+                    $('#'+productid_1+'_tbprice').replaceWith(price);
+                    $('#'+productid_1+'_tbquantity').replaceWith(quantity);
+                    $('#'+productid_1+'_tbprocompany').replaceWith(dealer);
+                    $('#'+productid_1+'_tbstatus').replaceWith(status);
+                    
+                    alert("The Product has been Edited");
+                    
+                }
+                    ,
+                error: function(error){
+                    console.log(error)
+                    alert("Not Edited")   
+                }
+            });
+        });
+    });
+
+    
+    
+    
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% include "main.html" %}
+<h2>Hai {{session['name']}}</h2>
+<style>
+    table,th,td{
+        border: 1px solid rgb(0, 0, 0);
+        border-collapse: collapse;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="mycartdetails" >
+    <table style="width:100%;margin-top:10px;text-align: center;">
+        <tr>
+            <!-- <th>Order ID</th> -->
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price Per Piece</th>
+            <th>Total Price</th>
+            <!-- <th>Less One</th>
+            <th>Count</th>
+            <th>Add One</th> -->
+        </tr>
+        {% for pro in product %}
+        <tr id="cartproducts">
+            <!-- <td>{{pro.orderno}}</td> -->
+            <td>{{pro.proname}}</td>
+            <td><button id="{{orderno}}_lessone">-</button> {{pro.quantity}} <button id="{{orderno}}_addone">+</button></td>
+            <td>{{pro.price}}</td>
+            <td>{{pro.price*pro.quantity}}</td>
+            <!-- <td ><button>.-.</button></td>
+            <td><input type="number" id="NoOfProducts" class="NoOfProducts" value="1"></td>
+            <td ><button>.+.</button></td> -->
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div>
+    <a href="{{url_for('buyproducts')}}">Click To buy Products in the Cart</a>
+</div>
+
+{% endblock %}
+
+
+<script>
+    // function 
+</script>

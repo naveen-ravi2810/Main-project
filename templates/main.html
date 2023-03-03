@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/static/js/main.js">
+  console.log(session['role'])
+</script>
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 35px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.5s;
+}
+.sidenav a.active {
+  background-color: whitesmoke;
+  color: white;
+}
+
+.sidenav a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+} 
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+{% if session['role'] == 'admin' %}
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="dashboard" ><i class="fa fa-dashboard" style="font-size:24px"></i> Dashboard</a>
+  <a href="amproducts"><i class="fas fa-edit"></i>Add or Modify Products</a>
+  <a href="amusers"><i class="fas fa-edit"></i>Add or Modify Users</a>
+  <a href="datahistory"><i class="fa-solid fa-clock-rotate-left"></i>History Check</a>
+  <a href="contactus"><i class="fas fa-address-book"></i>Contact Us</a>
+  <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+{% elif session['role'] == 'user' %}
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="{{url_for('dashboard')}}"><i class="fa fa-dashboard" style="font-size:24px"></i> Dashboard</a>
+  <a href="{{url_for('mycart')}}"><i class="fas fa-edit"></i>My Cart</a>
+  <a href="{{url_for('address')}}"><i class="fas fa-address-card"></i>Adress</a>
+  <a href="{{url_for('orderhistory')}}"><i class="fa-solid fa-clock-rotate-left"></i>Order History</a>
+  <a href="{{url_for('contactus')}}"><i class="fas fa-address-book"></i>Contact Us</a>
+  <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+{% elif session['role'] == 'approver' %}
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="{{url_for('dashboard')}}"><i class="fa fa-dashboard" style="font-size:24px"></i> Dashboard</a>
+  <a href="{{url_for('approveseller')}}"><i class="fas fa-user-check"></i> Approve Seller</a>
+  <a href="{{url_for('approveproduct')}}"><i class="fas fa-link"></i> Approve Product</a>
+  <a href="{{url_for('approvehistory')}}"><i class="fa-solid fa-clock-rotate-left"></i> Approve History</a>
+  <a href="{{url_for('contactus')}}"><i class="fas fa-address-book"></i> Contact Us</a>
+  <a href="{{url_for('logout')}}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+
+<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+
+
+
+{% endif %}
+
+
+
+<!-- <div class="main">hi this is a sidebar program</div>   -->
+</body>
+</html> 

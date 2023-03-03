@@ -1,0 +1,53 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% include "main.html" %}
+
+<style>
+    table,th,td{
+        border: 1px solid rgb(0, 0, 0);
+        border-collapse: collapse;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    td{
+        text-align: center;
+    }
+    #morebox{
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        width: 100%; 
+        height: 100%;
+        overflow: auto;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block body %}
+<h3>Here are the products You need to Approve</h3>
+<table style="width: 100%;">
+    <tr>
+        <th>seller Name</th>
+        <th>company Name</th>
+        <!-- <th>Product Type</th> -->
+        <th>Company Number</th>
+        <th>Info</th>
+    </tr>
+    {% for req in request %}
+    <tr id="{{req.id}}_row">
+        <td id="{{req.id}}_name">{{req.product_name}}</td>
+        <td id="{{req.id}}_company_name">{{req.company_name}}</td>
+        <!-- <td id="{{req.id}}_product_type">{{req.product_type}}</td> -->
+        <td id="{{req.id}}_company_number">{{req.company_number}}</td>
+        <td id="moreinfo"><button onclick="more('{{req.company_address}}','{{req.mobilenumber}}','{{req.more_info}}')">More</button></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,151 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+{% include "main.html" %}
+
+<style>
+    table,th,td{
+        border: 1px solid rgb(0, 0, 0);
+        border-collapse: collapse;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    td{
+        text-align: center;
+    }
+    #morebox{
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        width: 100%; 
+        height: 100%;
+        overflow: auto;
+    }
+    .box{
+    display: none;
+    position: fixed;
+    z-index: 1; 
+    padding-top: 100px; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%;
+    overflow: auto; 
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-left: 10px; 
+    }
+    .box label{
+    color: aqua;
+    padding-left: 200px;
+    }
+
+    .box input{
+        position: absolute;
+        padding-left: 20px;
+    }
+    .box p{
+    background-color: black;
+    color: red;
+    text-align: center;
+    }
+    .data{
+  background-color: #fefefe;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 50%;
+  height: 20px;
+  }
+
+  .product_option{
+    margin: auto;
+  padding: 10px;
+  border: 1px solid #888;
+  width: 50%;
+  height: 20px;
+  }
+
+  #company_address{
+    outline: none;
+  }
+</style>
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<h3>Here are the sellers You need to Approve</h3>
+<table style="width: 100%;">
+    <tr>
+        <th>seller Name</th>
+        <th>company Name</th>
+        <th>Product Type</th>
+        <th>Company Number</th>
+        <th>Info</th>
+    </tr>
+    {% for req in request %}
+    <tr id="{{req.id}}_row">
+        <td id="{{req.id}}_name">{{req.name}}</td>
+        <td id="{{req.id}}_company_name">{{req.company_name}}</td>
+        <td id="{{req.id}}_product_type">{{req.product_type}}</td>
+        <td id="{{req.id}}_company_number">{{req.company_number}}</td>
+        <td id="moreinfo" onclick="more('{{req.id}}','{{req.company_address}}','{{req.mobilenumber}}','{{req.more_info}}')">More</td>
+    </tr>
+    {% endfor %}
+</table>
+
+                                <!-- More Info -->
+<div id="moreblock" class="box" style="display: none;">
+    <p>Displayint the Details of Selected Seller... <button id="moreclose">close</button> </p>
+    <div class="data"><label >Company Address</label> <input id="company_address" style="border: none;" readonly></div>
+    <div class="data"><label >Seller Number</label><input id="seller_number" style="border: none;" readonly></div>
+    <div class="data"><label >Information</label><input id="info" style="border: none;" readonly></div>
+    <nav class="product_option"><button onclick="accept_product(id)">ACCEPT</button> <button>DENNY</button></nav> 
+</div>
+
+
+<script>
+    
+    function more(id, a, b, c){
+        $('#moreblock').show();
+        var company_address = $('#company_address').val(a);
+        var seller_number = $('#seller_number').val(b);
+        var info = $('#info').val(c);
+    }
+
+
+
+    $("#moreclose").click(function(){
+            $("#moreblock").hide();
+    })
+
+    function accept_product(a){
+        $("#moreblock").hide();
+        var id=a;
+        $.ajax({
+            url:'/accept_product',
+            data:{
+                id :id 
+            } ,
+            type:'POST',
+            success: function(response){
+                console.log('The Product Has been Added Successfully');
+                alert("Product added to the cart successfully")
+            },
+            error: function(error){
+                console.log('Some Error in Adding to cart');
+            }
+        })
+    }
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,83 @@
+body{
+    font-family: 'roboto',sans-serif;
+}
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+.sidebar{
+    position: fixed;
+    left: 0;
+    width: 400px;
+    height: 100%;
+    background: #000;
+}
+.sidebar header{
+    font-size: 30px;
+    color: aliceblue;
+    text-align: center;
+    line-height: 70px;
+    background: red;
+    user-select: none;
+}
+.sidebar ul{
+    display: block;
+    height: 100%;
+    width: 100%;
+    line-height: 65px;
+    font-size: 25px;
+    color: white;
+    padding-left: 30px;
+    box-sizing: border-box;
+    border-top: 1px solid yellow;
+    border-bottom: 1px solid yellow;
+    transition: .4s;
+}
+ul li:hover a{
+    padding-left: 40px;
+
+}
+.sidebar ul a i{
+    margin-right: 16px;
+}
+#check{
+    display: none;
+}
+label #btn,label #cancel{
+    position: absolute;
+    cursor: pointer;
+}
+label #btn{
+    left: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

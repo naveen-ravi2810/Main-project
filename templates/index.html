@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{regmsg}}
+
+
+<!-- code new -->
+
+<style>
+    body {
+   background: linear-gradient(-100deg,#DAF7A6,#FFC300,#FF5733,#C70039);
+}
+.image{
+  display:block;
+  margin-top:1cm;
+  margin-left:16cm;
+  margin-right:15cm;
+  height:180px;
+  width:250px;
+  border-radius:800px;
+  box-shadow: 5px 5px #888888;
+}
+.ad{
+  float:left;
+  margin-top:3cm;
+  margin-left:2.2cm;
+  height:15cm;
+  width:18.8cm;
+  border-radius:30px;
+  background:rgb(255,255,255,0.1);
+  overflow:hidden;
+}
+.ex{
+  height:13cm;
+  width:13cm;
+  margin-top:3cm;
+  margin-bottom:1cm;
+  margin-left:24cm;
+  margin-right:2cm;
+  padding-top:1cm;
+  padding-left:1cm;
+  padding-bottom:1cm;
+  background:white;
+  font-family:system-ui;
+  border-style:solid;
+  border-radius:30px;
+  border-color:white;
+  box-shadow: 4px 5px #888888;
+  position:relative;
+}
+h1{
+  text-align:center;
+}
+span{
+  padding-left:160px;
+}
+a{
+  padding-left:160px;
+  color:#626567  ;
+}
+.las{
+  padding-left:10px;
+}
+.mas,.mas1{
+  border:none;
+  outline:none;
+  border-bottom:solid;
+  font-family:sans-serif;
+  font-weight:600;
+  font-size:22px;
+  text-rendering: auto;
+  text-overflow: clip;
+  touch-action: auto;
+}
+.mas:hover{
+  background-color:white;
+  cursor:grab;
+}
+
+.sam{
+  height:35px;
+  width:75px;
+  border-style: solid;
+  border-radius:30px;
+  font-family:system-ui;
+  font-weight:bold;
+  font-size:15px;
+  color:white;
+  background-color:black;
+}
+input:hover{
+  color:black;
+  cursor:grab;
+  background:white;
+}
+input:active{
+  color:black;
+  background-color:white;
+}
+input:focus{
+  color:black;
+  cursor:grab;
+  background-color:white;
+}
+.footer{
+  color:rgb(255,255,255);
+  text-decoration:none;
+  top:none;
+}
+</style>
+
+
+
+
+
+
+
+
+
+<title>Login</title>
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<!-- code New -->
+
+<img src="https://www.linkpicture.com/q/logo_25.jpg" alt="image" class="image">
+  <div class="ad">
+    <img src="" alt="image" class="image1"></div>
+  </div>
+  <div class="ex">
+    <h1> LOGIN </h1>
+    <br><br>
+    <form method="post">  
+        <input class="mas" type="text" placeholder="User Name" name="username" required><br><br><br><br>
+        <input class="mas1" type="password"   placeholder="Password" name="password" required><br><br>
+        <a href="#" target="blank"> forget password...?
+        <br><br><br>
+        <input class="sam" type="submit" value="Login">
+      <form>
+        <br>
+        <br>
+        <br>
+        <a href="{{url_for('register')}}" class="las"> Register
+  </div>
+        <footer class="footer" align="center"> &#169;all rights reserved</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="login">
+        <div class="logo">
+            <p onmouseover="style.color='red'" onmouseout="style.color='black'"> Amazon </p>
+        </div>
+        <div class="sign">
+            Sign in
+        </div>
+        <div class="tcs">
+            To continue shopping
+        </div>
+        <form method="post">
+            <div class="getusername">
+                <input type="text" placeholder="Username or Phone" name="username" id="usernamebox" required>
+            </div>
+            
+            <div class="getpassword">
+                <input type="password" placeholder="Enter Password" name="password" id="userpasswordbox" required>
+            </div>
+            <br>
+            <div class="msg">
+                {{msg}}
+            </div>
+            
+            <div class="nyc">
+                Not your Computer? Use Guest mode to sign <br> in. <a href="learnmore">Learnmore</a>
+            </div>
+            <div class="createandnext">
+                
+                <a id="create" href="register">Create Account</a>
+                <input type="submit" value="next" id="nextbutton">
+                
+            </div>
+        </form>
+    </div> -->
+
+
+{% endblock %}

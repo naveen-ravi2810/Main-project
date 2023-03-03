@@ -1,0 +1,28 @@
+function fnProduct(procode,proname,price,quantity,dealer,status) {
+        document.getElementById("procode").value=procode;
+        document.getElementById("proname").value=proname;
+        document.getElementById("price").value=price;
+        document.getElementById("quantity").value=quantity;
+        document.getElementById("dealer").value=dealer;
+        document.getElementById("status").value=status;
+        document.getElementById("editproduct").style.display="block";
+        document.getElementById("createproducts").style.display="none";
+    }
+    function fnsave(){
+        document.getElementById("products").innerHTML.reload;
+        document.getElementById("editproduct").style.display="none";
+    }
+    // function fncreate(){
+    //     document.getElementById("procode").value=null;
+    //     document.getElementById("proname").value=null;
+    //     document.getElementById("price").value=null;
+    //     document.getElementById("quantity").value=null;
+    //     document.getElementById("dealer").value=null;
+    //     document.getElementById("status").value=null;
+    //     document.getElementById("createproducts").style.display="block";
+    //     document.getElementById("editproduct").style.display="none";
+    // }
+    // function fnsavenew(){
+        
+    //     document.getElementById("createproducts").style.display="none";
+    // }

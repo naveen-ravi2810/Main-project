@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% include "main.html" %}
+<style>
+    table,th,td{
+        border: 1px solid rgb(0, 0, 0);
+        border-collapse: collapse;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+{% endblock %}
+
+<!-- Body Block -->
+
+
+{% block body %}
+<br>
+
+<!-- Admin Site -->
+    {% if session['role'] == 'admin' %}
+        Hello {{session['name']}}
+        This is a dashboard Recommended For the Higher Propose Uses :)
+
+
+
+<!-- User Site -->
+{% elif session['role'] == 'user' %}
+<div >Hello {{session['name']}} Your Role is {{session['role']}}</div>
+
+
+<div id="products" class="products"><br>
+    <h1>These are the items in Market</h1>
+    <table  style="width:100% ;">
+        <tr class="tableheadings" ">
+            <th>Product Name</th>
+            <th>Product Code</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Add to List</th>
+        </tr>
+        {% for user in product %}
+        {% if user.status == 'Yes' %}
+        <tr class="productsdetails">
+            <td id="productid" hidden>{{user.productid}}</td>
+            <td id="{{user.productid}}_tbproname">{{user.proname}}</td>
+            <td id="{{user.productid}}_tbprocode">{{user.procode}}</td>
+            <td id="{{user.productid}}_tbprice">{{user.price}}</td>
+            <td><input style="width: 35px;" type="number" value="1" id="{{user.productid}}_tbquantity"></td>
+            <!-- <td style="cursor: pointer;" id="btnaddtocart"  class="fas fa-plus">Add</td> -->
+            <td id="{{user.productid}}_addtocart" style="cursor: pointer;" id="btnaddtocart" onclick="fnaddtolist('{{user.productid}}')" class="fas fa-plus">Add </td>
+        </tr>
+        {% endif %}
+        
+        {% endfor %}
+    </table>
+    <br>
+    
+    <br>
+</div>
+
+
+<!-- Approver Site -->
+
+{% elif session['role']=='approver' %}
+<div ><h1>Hello {{session['name']}} Your Role is {{session['role']}}</h1></div>
+
+
+
+
+<!-- Next User Details TO be Entered Here -->
+{% endif %}
+
+<script>
+   
+        
+    function fnaddtolist(id){
+        console.log(id);
+        var productid=id;
+        var productquantity= $("#"+id+"_tbquantity").val();
+        console.log(productquantity)
+        var user="{{session['name']}}";
+        
+    $.ajax({
+        url: '/addtocart',
+        data: {
+            
+            id: productid, 
+            quantity: productquantity,
+        },
+        
+        type: 'POST',
+        success: function(response){
+            console.log('The Product Has been Added Successfully');
+            alert("Product added to the cart successfully")
+        },
+        error: function(error){
+            console.log('Some Error in Adding to cart');
+        }
+    })
+}
+</script>
+    
+
+{% endblock %}
